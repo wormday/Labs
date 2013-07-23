@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+        //---------------
+        (function()
+        {
+            function MyObj()
+            {}
+            function MyObjExt()
+            {}
+            MyObjExt.prototype=new MyObj();
+            var obj1=new MyObjExt();
+            var obj2=new MyObjExt();
+            alert(obj1.constructor);//constructor错误
+        })();
+        //---------------
+        (function()
+        {
+            function MyObj()
+            {}
+            function MyObjExt()
+            {}
+            MyObjExt.prototype=new MyObj();
+            MyObjExt.prototype.constructor=MyObjExt;////////////
+            var obj1=new MyObjExt();
+            var obj2=new MyObjExt();
+            alert(obj1.constructor);//正确
+            alert(obj1.constructor.prototype.constructor);//原型的constructor错误了
+        })();
+        //------------------
+        (function()
+        {
+            function MyObj()
+            {}
+            function MyObjExt()
+            {
+                this.constructor=MyObjExt;//////////////////////
+            }
+            MyObjExt.prototype=new MyObj();
+            var obj1=new MyObjExt();
+            var obj2=new MyObjExt();
+            alert(obj1.constructor);//正确
+            alert(obj1.constructor.prototype.constructor);//正确
+        })();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

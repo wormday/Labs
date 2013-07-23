@@ -10,3 +10,9 @@
 3.times{puts '4444'}
 puts "123456".gsub('4','*')
 puts '333r'.replace("d")
+a='Hello'
+b=:a
+a=6
+c=:a
+p b==c
+p b.class
