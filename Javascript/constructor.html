@@ -3,9 +3,18 @@
 <head>
     <title></title>
     <script>
+        //
+        function writeLine(str,code)
+        {
+            if(code)
+                document.writeln(code+' ---> '+str+'<br />');
+            else
+                document.writeln(str+'<br />');
+        }
         //---------------
         (function()
         {
+            writeLine('demo 1');
             function MyObj()
             {}
             function MyObjExt()
@@ -13,36 +22,42 @@
             MyObjExt.prototype=new MyObj();
             var obj1=new MyObjExt();
             var obj2=new MyObjExt();
-            alert(obj1.constructor);//constructor错误
+            writeLine(obj1.constructor,"obj1.constructor");//constructor错误
         })();
         //---------------
         (function()
         {
+            writeLine('demo 2');
             function MyObj()
             {}
             function MyObjExt()
             {}
             MyObjExt.prototype=new MyObj();
-            MyObjExt.prototype.constructor=MyObjExt;////////////
+            MyObjExt.prototype.constructor=MyObjExt;//人为更改原型后 默认原型构造器对应的函数 也会被改变
             var obj1=new MyObjExt();
             var obj2=new MyObjExt();
-            alert(obj1.constructor);//正确
-            alert(obj1.constructor.prototype.constructor);//原型的constructor错误了
+            writeLine(obj1.constructor==MyObjExt,"obj1.constructor==MyObjExt");//跟预期一致
+            writeLine(obj1 instanceof  MyObjExt,"obj1 instanceof  MyObjExt");//跟预期一致
+            writeLine(obj1.constructor.prototype.constructor==MyObj,"obj1.constructor.prototype.constructor");//跟预期不一致
+            writeLine(obj1.constructor.prototype instanceof MyObj,"obj1.constructor.prototype instanceof MyObj");//跟预期一致
         })();
         //------------------
         (function()
         {
+            writeLine('demo 3');
             function MyObj()
             {}
             function MyObjExt()
             {
-                this.constructor=MyObjExt;//////////////////////
+                this.constructor=MyObjExt;//不使用默认的构造器 手工指定
             }
             MyObjExt.prototype=new MyObj();
             var obj1=new MyObjExt();
             var obj2=new MyObjExt();
-            alert(obj1.constructor);//正确
-            alert(obj1.constructor.prototype.constructor);//正确
+            writeLine(obj1.constructor==MyObjExt,"obj1.constructor==MyObjExt");//跟预期一致
+            writeLine(obj1 instanceof  MyObjExt,"obj1 instanceof  MyObjExt");//跟预期一致
+            writeLine(obj1.constructor.prototype.constructor==MyObj,"obj1.constructor.prototype.constructor");//跟预期不一致
+            writeLine(obj1.constructor.prototype instanceof MyObj,"obj1.constructor.prototype instanceof MyObj");//跟预期一致
         })();
     </script>
 </head>
