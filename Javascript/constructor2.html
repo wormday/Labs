@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<title>constructor2</title>
+<script>
+    //
+    function writeLine(str,code)
+    {
+        if(code)
+            document.writeln(code+' ---> '+str+'<br />');
+        else
+            document.writeln(str+'<br />');
+    }
+    (function(){
+        var obj1={t:3};
+        writeLine(obj1.constructor==Object,"obj1.constructor==Object");
+        obj1.constructor.prototype.tt=3;
+        writeLine(obj1.tt,"obj1.tt");
+        writeLine(obj1.constructor.prototype instanceof Object,"obj1.constructor.prototype instanceof Object");
+        writeLine(obj1 instanceof Object,"obj1 instanceof Object");
+        writeLine(obj1.constructor.prototype.constructor,"obj1.constructor.prototype.constructor");
+    })()
+</script>
+</head>
+<body>
+
+</body>
+</html>
