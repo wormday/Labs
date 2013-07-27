@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PropertiesOfTheObjectPrototypeObject</title>
+</head>
+<script>
+    function writeLine(str,code)
+    {
+        if(code)
+            document.writeln(code+' ---> '+str+'<br />');
+        else
+            document.writeln(str+'<br />');
+    }
+    (function(){
+        writeLine('toString')
+        function MyObject(){}
+        var myObj1=new MyObject();
+        writeLine(myObj1.toString);
+
+        var s1=new String('this is a string');
+        writeLine(typeof s1);
+        writeLine(s1 instanceof  String);
+        writeLine(s1.toString());
+
+        var s2="this is a string 2"
+        writeLine(typeof s2);
+        writeLine(s2 instanceof  String);
+        writeLine(s2.toString());
+    })();
+</script>
+<body>
+
+</body>
+</html>
