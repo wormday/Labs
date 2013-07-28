@@ -12,22 +12,46 @@
         var block=function(){
             this.style=BlankBlockStyle;
         }
-        for(var lineNumber=0;lineNumber<20;lineNumber++)
-        {
+        for(var lineNumber=0;lineNumber<20;lineNumber++){
             sense[lineNumber]=new Array();
             for(var colNumber=0;colNumber<10;colNumber++)
             {
                 sense[lineNumber][colNumber]=new block();
+                if(lineNumber==colNumber)  {
+                    sense[lineNumber][colNumber].style=   OccuptedBlockStyle;
+                }
             }
         }
         var c=document.getElementById("myCanvas");
         var blockWidth= c.width/10;
         var blockHeight= c.height/20;
         var blockGap=1;
-        var cxt=c.getContext("2d");
-        cxt.fillStyle="#FF0000";
-        cxt.fillRect(0,0,blockWidth,blockHeight);
-    };
+        draw(c,sense);
+        //S、Z、L、J、I、O、T
+        var Birck=new Object;
+        Birck.BirckS=[{x:0,y:0},{x:1,y:0},{x:1,y:1},{x:2,y:1}];
+        Birck.BirckZ=[{x:0,y:1},{x:1,y:0},{x:1,y:1},{x:2,y:0}];
+        Birck.BirckL=[{x:1,y:2},{x:1,y:1},{x:1,y:0},{x:2,y:0}];
+        Birck.BirckJ=[{x:1,y:2},{x:1,y:1},{x:1,y:0},{x:0,y:0}];
+        Birck.BirckI=[{x:1,y:0},{x:1,y:2},{x:1,y:3},{x:1,y:4}];
+        Birck.BirckO=[{x:0,y:0},{x:0,y:1},{x:1,y:1},{x:1,y:0}];
+        Birck.BirckT=[{x:0,y:1},{x:1,y:1},{x:2,y:1},{x:1,y:0}];
+
+
+        function draw(canvas,sense) {
+            for(var i=0;i<sense.length;i++)
+            {
+                for(var j=0;j<sense[i].length;j++){
+                    if(!sense[i][j].style.isBlank)
+                    {
+                        var cxt=canvas.getContext("2d");
+                        cxt.fillStyle="#FF0000";
+                        cxt.fillRect(i*blockWidth,j*blockHeight,blockWidth,blockHeight);
+                    }
+                }
+            }
+        }
+    }
 </script>
 <body onload="star()">
 <canvas id="myCanvas" width="200" height="400" style="border:1px solid #c3c3c3;">
