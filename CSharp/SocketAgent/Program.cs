@@ -14,40 +14,59 @@ namespace SocketAgent
         {
             System.Net.Sockets.TcpListener agentServer = new System.Net.Sockets.TcpListener(System.Net.IPAddress.Any, 350);
             agentServer.Start();
+            int i = 0;
             while (true)
             {
-                TcpClient client = agentServer.AcceptTcpClient();
-                TcpClient agentClient = new TcpClient("192.168.80.10", 5008);
-                NetworkStream streamAgent = agentClient.GetStream();
-                stream = client.GetStream();
-                stream.BeginRead(bytesSend, 0, bytesSend.Length, Callback, streamAgent);
+                new Server(agentServer.AcceptTcpClient(),i);
+                i++;
             }
         }
-        private static void Callback(IAsyncResult ar)
+        public class Server
         {
-
-            String dataSend = null;
-
-            Byte[] bytesReceive = new Byte[1024];
-            String dataReceive = null;
-            int i;
-            if ((i = stream.EndRead(ar)) != 0)
+            private TcpClient _TcpClient;
+            private TcpClient agentClient = new TcpClient("192.168.80.10", 5008);
+            private byte[] receiveBuffer;
+            private int _ID;
+            public Server(TcpClient tcpClient,int id)
             {
-                dataSend = System.Text.Encoding.UTF8.GetString(bytesSend, 0, i);
-                Output("C-S", bytesSend, i);
-                Output("C-S", dataSend);
-                NetworkStream streamAgent = (NetworkStream)ar.AsyncState;
-
-
-                // Send the message to the connected TcpServer.
-                streamAgent.Write(bytesSend, 0, i);
-                int j = streamAgent.Read(bytesReceive, 0, bytesReceive.Length);
-
-                dataReceive = System.Text.Encoding.UTF8.GetString(bytesReceive, 0, j);
-                Output("S-C", bytesReceive, j);
-                Output("S-C", dataReceive);
-                stream.Write(bytesReceive, 0, j);
-                stream.BeginRead(bytesSend, 0, bytesSend.Length, Callback, streamAgent);
+                _ID = id;
+                _TcpClient = tcpClient;
+                receiveBuffer = new byte[_TcpClient.ReceiveBufferSize];
+                _TcpClient.GetStream().BeginRead(receiveBuffer, 0, _TcpClient.ReceiveBufferSize, Receive, null);
+                
+            }
+            public void Receive(IAsyncResult ir)
+            {
+                int i = _TcpClient.GetStream().EndRead(ir);
+                if (i > 0)
+                {
+                    string str = System.Text.ASCIIEncoding.ASCII.GetString(receiveBuffer, 0, i);
+                    Console.WriteLine(string.Format("{0}|{1}|{2}",_ID,"CA",str));
+                    agentClient.GetStream().BeginWrite(receiveBuffer, 0, i, Send, null);
+                    Console.WriteLine(string.Format("{0}|{1}|{2}", _ID, "AS", ""));
+                    
+                }
+            }
+            public void Send(IAsyncResult ir)
+            {
+                agentClient.GetStream().EndWrite(ir);
+                agentClient.GetStream().BeginRead(receiveBuffer, 0, _TcpClient.ReceiveBufferSize, Receive2, null);
+            }
+            public void Receive2(IAsyncResult ir)
+            {
+                int i = agentClient.GetStream().EndRead(ir);
+                if (i > 0)
+                {
+                    string str = System.Text.ASCIIEncoding.ASCII.GetString(receiveBuffer, 0, i);
+                    Console.WriteLine(string.Format("{0}|{1}|{2}", _ID, "SA", str));
+                    _TcpClient.GetStream().BeginWrite(receiveBuffer, 0, i, Send2, null);
+                    Console.WriteLine(string.Format("{0}|{1}|{2}", _ID, "AC", ""));
+                }
+            }
+            public void Send2(IAsyncResult ir)
+            {
+                _TcpClient.GetStream().EndWrite(ir);
+                _TcpClient.GetStream().BeginRead(receiveBuffer, 0, _TcpClient.ReceiveBufferSize, Receive, null);
             }
         }
         private static void Output(string type, string str)
