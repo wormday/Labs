@@ -24,7 +24,7 @@ namespace SocketAgent
         public class Server
         {
             private TcpClient _TcpClient;
-            private TcpClient agentClient = new TcpClient("192.168.80.10", 5008);
+            private TcpClient agentClient = new TcpClient("192.168.80.10", 5009);
             private byte[] receiveBuffer;
             private int _ID;
             public Server(TcpClient tcpClient,int id)
@@ -41,14 +41,15 @@ namespace SocketAgent
                 if (i > 0)
                 {
                     string str = System.Text.ASCIIEncoding.ASCII.GetString(receiveBuffer, 0, i);
-                    Console.WriteLine(string.Format("{0}|{1}|{2}",_ID,"CA",str));
+                    Output(_ID,"CA",str);
+                    Output(_ID,"CA",receiveBuffer,i);
                     agentClient.GetStream().BeginWrite(receiveBuffer, 0, i, Send, null);
-                    Console.WriteLine(string.Format("{0}|{1}|{2}", _ID, "AS", ""));
-                    
+                    Output(_ID, "AS", "BEGIN");
                 }
             }
             public void Send(IAsyncResult ir)
             {
+                Output(_ID, "AS", "END");
                 agentClient.GetStream().EndWrite(ir);
                 agentClient.GetStream().BeginRead(receiveBuffer, 0, _TcpClient.ReceiveBufferSize, Receive2, null);
             }
@@ -58,27 +59,29 @@ namespace SocketAgent
                 if (i > 0)
                 {
                     string str = System.Text.ASCIIEncoding.ASCII.GetString(receiveBuffer, 0, i);
-                    Console.WriteLine(string.Format("{0}|{1}|{2}", _ID, "SA", str));
+                    Output(_ID, "SA", str);
+                    Output(_ID, "SA", receiveBuffer, i);
                     _TcpClient.GetStream().BeginWrite(receiveBuffer, 0, i, Send2, null);
-                    Console.WriteLine(string.Format("{0}|{1}|{2}", _ID, "AC", ""));
+                    Output(_ID, "AC", "BEGIN");
                 }
             }
             public void Send2(IAsyncResult ir)
             {
+                Output(_ID, "AC", "END");
                 _TcpClient.GetStream().EndWrite(ir);
                 _TcpClient.GetStream().BeginRead(receiveBuffer, 0, _TcpClient.ReceiveBufferSize, Receive, null);
             }
         }
-        private static void Output(string type, string str)
+        private static void Output(int id,string type, string str)
         {
-            Console.WriteLine(type + ":" + str);
+            Console.WriteLine(string.Format("{0}|{1}|{2}",id,type,str));
         }
-        private static void Output(string type, byte[] data, int length)
+        private static void Output(int id,string type, byte[] data, int length)
         {
-            Console.Write(type + ":");
+            Console.Write(id.ToString()+"|"+type + "|");
             for (int i = 0; i < length; i++)
             {
-                Console.Write(string.Format("{0}|", data[i]));
+                Console.Write(string.Format("{0}.", data[i]));
             }
             Console.WriteLine();
         }
