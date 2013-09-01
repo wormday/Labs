@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+        var customerLogin = {
+            loginInit:
+                    function () {
+                        var B = $("#name");
+                        var A = $.trim(B.attr("value2"));
+                        if (A != null && A.length > 0)
+                        { B.val(A);
+                            B.addClass("hasDefaultTextOn")
+                        }
+                    },
+            Check: function () { var A = 0;
+                $("#LoginError").text("");
+                $("#LoginError").removeClass("error");
+                if (($.trim($("#name").val()) == "" || $.trim($("#name").val()) == $("#name").attr("defaultPrompt")) && A == 0)
+                {
+                    $("#LoginError").addClass("error");
+                    $("#LoginError").text(resources_CustomerLogin.alert_CustomerCodeEmpry);
+                    A++
+                }
+                if ($.trim($("#pwd").val()) == "" && A == 0)
+                { $("#LoginError").addClass("error"); $("#LoginError").text(resources_CustomerLogin.alert_CustomerPWDEmpty); A++
+                }
+                if ($("#validator").val() != null && A == 0)
+                { if ($.trim($("#validator").val()) == "") { $("#LoginError").addClass("error"); $("#LoginError").text(resources_CustomerLogin.alert_CustomerValationEmpty); A++ }
+                }
+                if (A == 0) {
+                    $("#action").val("Get");
+                    $("#LoginForm").submit()]
+                }
+            },
+            refreshValidator: function (B, A) { var C = $(B).attr("ref1"); newurl = C + "&r=" + Math.random(); $(B).attr("src", newurl); $(A).focus() },
+            OpenWind: function (D)
+            { var C = (document.body.clientHeight - 420) / 2; var B = (document.body.clientWidth - 520) / 2;
+                var A = $(D).attr("href"); window.open(A, "SinaWindow", "height=395, width=583, toolbar =no, menubar=no, scrollbars=yes, resizable=no,top=" + C + ",left=" + B + ", location=no, status=no");
+                return false
+            }
+        };
+        var miniLoginType = {
+            blurMini: function () { $("#logTip").css("display", "none") },
+            clickMini: function () { $("#logTip").css("display", "block") }
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>
