@@ -74,16 +74,21 @@ namespace SocketAgent
         }
         private static void Output(int id,string type, string str)
         {
-            Console.WriteLine(string.Format("{0}|{1}|{2}",id,type,str));
+            string log = string.Format("{0}|{1}|{2}", id, type, str);
+            Console.WriteLine(log);
+            System.IO.File.AppendAllText("Log.txt", log+System.Environment.NewLine);
         }
         private static void Output(int id,string type, byte[] data, int length)
         {
+            string log = id.ToString() + "|" + type + "|";
+
             Console.Write(id.ToString()+"|"+type + "|");
             for (int i = 0; i < length; i++)
             {
-                Console.Write(string.Format("{0}.", data[i]));
+                log+=string.Format("{0} ", data[i]);
             }
-            Console.WriteLine();
+            Console.WriteLine(log);
+            System.IO.File.AppendAllText("Log.txt", log + System.Environment.NewLine);
         }
     }
 }
