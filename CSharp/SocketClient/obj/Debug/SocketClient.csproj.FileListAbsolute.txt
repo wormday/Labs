@@ -1,4 +1,0 @@
-C:\Projects\Labs\CSharp\SocketClient\bin\Debug\SocketClient.exe
-C:\Projects\Labs\CSharp\SocketClient\bin\Debug\SocketClient.pdb
-C:\Projects\Labs\CSharp\SocketClient\obj\Debug\SocketClient.exe
-C:\Projects\Labs\CSharp\SocketClient\obj\Debug\SocketClient.pdb
