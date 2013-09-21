@@ -66,4 +66,12 @@ def initialize(computer_id,data_source)
 @ds=data_source
 data_source.methods.grep(/^get_(.)_info$/)
 end
+def component(name)
+info=@ds.send("get_#{name}_info",@id)
+price=@ds.send("get_#{name}_price",@id)
+result="#{name.to_s.capitalize}:#{info}#{price}"
+
 end
+end
+
+

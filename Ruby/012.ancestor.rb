@@ -6,6 +6,8 @@ puts "-----"
 puts ClassDd.methods
 puts "-----------------"
 puts ClassDd.ancestors
+class F
+def f
 
-
-
+end
+end
