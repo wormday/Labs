@@ -1,0 +1,4 @@
+C:\Projects\Labs\ASP.Net\MinMVC\SimpleTest\bin\SimpleTest.dll
+C:\Projects\Labs\ASP.Net\MinMVC\SimpleTest\bin\SimpleTest.pdb
+C:\Projects\Labs\ASP.Net\MinMVC\SimpleTest\obj\Debug\SimpleTest.dll
+C:\Projects\Labs\ASP.Net\MinMVC\SimpleTest\obj\Debug\SimpleTest.pdb

@@ -1,0 +1,4 @@
+C:\Projects\Labs\ASP.Net\MinMVC\MinMVC\bin\MinMVC.dll
+C:\Projects\Labs\ASP.Net\MinMVC\MinMVC\bin\MinMVC.pdb
+C:\Projects\Labs\ASP.Net\MinMVC\MinMVC\obj\Debug\MinMVC.dll
+C:\Projects\Labs\ASP.Net\MinMVC\MinMVC\obj\Debug\MinMVC.pdb
