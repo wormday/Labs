@@ -1,0 +1,37 @@
+package com.swq.disastermonitoring;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+
+public class NetThread implements Runnable {
+	public double latitude;
+	public double longitude;
+	public double accelerometerValue;
+	public String userId;
+	
+	public NetThread(double latitude,double longitude,String userId)
+	{
+		this.latitude=latitude;
+		this.longitude=longitude;
+		this.userId=userId;
+	}
+	public NetThread(double accelerometerValue,String userId)
+	{
+		this.accelerometerValue=accelerometerValue;
+		this.userId=userId;
+	}
+	@Override  
+	public void run() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US);
+		if(this.accelerometerValue>0)
+		{
+        GetPostUtil.sendPost("http://222.66.97.54:8086/location/add","latitude="+latitude+"&longitude="+longitude+"&locationTime="+sdf.format(new Date())+"&userID="+userId);
+		}
+		else
+		{
+			GetPostUtil.sendPost("http://222.66.97.54:8086/location/add","latitude="+latitude+"&longitude="+longitude+"&locationTime="+sdf.format(new Date())+"&userID="+userId);
+		}
+	}  
+}

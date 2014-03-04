@@ -1,0 +1,24 @@
+package com.swq.tracker;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.swq.tracker.*;
+
+public class NetThread implements Runnable {
+	public double latitude;
+	public double longitude;
+	
+	public NetThread(double latitude,double longitude)
+	{
+		this.latitude=latitude;
+		this.longitude=longitude;
+	}
+	
+	@Override  
+	public void run() {  
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String str=GetPostUtil.sendPost("http://222.66.97.54:8086/location/add","latitude="+latitude+"&longitude="+longitude+"&locationTime="+sdf.format(new Date())+"&userID=333");
+	}  
+}

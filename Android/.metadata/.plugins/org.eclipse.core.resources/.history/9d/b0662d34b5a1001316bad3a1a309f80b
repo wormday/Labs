@@ -1,0 +1,125 @@
+package com.swq.disastermonitoring;
+
+import java.io.*;
+import android.app.Service;
+import android.view.*;
+import android.os.*;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.hardware.*;
+import android.hardware.Camera.*;
+import android.content.Intent;
+import android.view.View.OnClickListener;
+
+public class CaptureImageService extends Service implements OnClickListener {
+	int screenWidth, screenHeight;
+	Camera camera;
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		initCamera();
+	}
+
+	@Override
+	public int onStartCommand(Intent intent,int flags,int startId)
+	{
+		super.onStartCommand(intent, flags, startId);
+		screenWidth=1024;
+		screenHeight=768;
+		Capture();
+		return START_STICKY;
+	}
+	
+	private void initCamera() {
+		camera = Camera.open(0);
+		if (camera != null) {
+			try {
+				camera.setDisplayOrientation(90);
+				Camera.Parameters parameters = camera.getParameters();
+				//parameters.setPreviewSize(screenWidth, screenHeight);
+				//parameters.setPreviewFpsRange(4, 10);
+				parameters.setPictureFormat(ImageFormat.JPEG);
+				parameters.set("jpeg-quality", 85);
+				parameters.setPictureSize(screenWidth, screenHeight);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void Capture() {
+		if (camera != null) {
+			camera.stopPreview();
+			//camera.autoFocus(autoFocusCallback);
+			camera.takePicture(shutterCallback, rawCallback, myJpegCallback);
+		}
+	}
+
+  ShutterCallback shutterCallback = new ShutterCallback()  
+    {  
+      public void onShutter()  
+      {  
+        /* 按快门瞬间会执行这里的代码 */
+      }  
+    };
+
+
+  PictureCallback rawCallback = new PictureCallback()  
+    {  
+      public void onPictureTaken(byte[] _data, Camera _camera)  
+      {  
+        /* 如需要处理 raw 则在这里 写代码 */
+      }  
+    };
+    
+	AutoFocusCallback autoFocusCallback = new AutoFocusCallback() {
+		@Override
+		public void onAutoFocus(boolean success, Camera camera) {
+			if (success) {
+				camera.takePicture(new ShutterCallback() {
+					public void onShutter() {
+
+					}
+				}, new PictureCallback() {
+					public void onPictureTaken(byte[] data, Camera c) {
+
+					}
+				}, myJpegCallback);
+			}
+		}
+	};
+
+	PictureCallback myJpegCallback = new PictureCallback() {
+		@Override
+		public void onPictureTaken(byte[] data, Camera camera) {
+			File file = new File(Environment.getExternalStorageDirectory()
+					+ "AAA" + ".jpg");
+			FileOutputStream outStream = null;
+			try {
+				outStream = new FileOutputStream(file);
+				final Bitmap bm = BitmapFactory.decodeByteArray(data, 0,
+						data.length);
+				bm.compress(CompressFormat.JPEG, 100, outStream);
+				outStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	};
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

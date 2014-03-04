@@ -1,0 +1,31 @@
+package com.swq.disastermonitoring;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.Environment;
+
+import java.io.File;
+import java.io.FileFilter;
+
+public class PhotoUploadActivity extends Activity  {
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+	
+		File path1 = new File(Environment.getExternalStorageDirectory()+ "/DisasterMonitoring");
+		if (!path1.exists())
+			path1.mkdirs();
+		File[] files=path1.listFiles(new FileFilter(){
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.getName().endsWith(".jpg");
+			}});
+		for(int i=0;i<files.length;i++)
+		{
+			Thread t=new Thread();
+			t.start();
+		}
+	}
+}

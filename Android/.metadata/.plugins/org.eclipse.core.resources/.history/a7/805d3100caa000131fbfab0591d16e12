@@ -1,0 +1,74 @@
+package com.swq.disastermonitoring;
+
+import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.map.LocationData;
+import com.baidu.mapapi.map.MapController;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationOverlay;
+import com.baidu.platform.comapi.basestruct.GeoPoint;
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.TextView;
+import java.util.TimerTask;
+import java.util.Timer;
+
+public class MapActivity extends Activity {
+
+    private TextView mTextView;  
+    private BMapManager mBMapMan = null;  
+    private MapView mMapView = null;  
+    private SharedPreferences preferences;
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        mBMapMan=new BMapManager(getApplication());  
+        mBMapMan.init("EFu2xqWLSXWZXU2LQhucPQbG", null);    
+        preferences=getSharedPreferences("PRIVATE",Activity.MODE_PRIVATE);
+        //注意：请在试用setContentView前初始化BMapManager对象，否则会报错  
+        setContentView(R.layout.map);  
+        mTextView = (TextView) findViewById(R.id.tv1);  
+        
+        mMapView=(MapView)findViewById(R.id.bmapsView);  
+        mMapView.setBuiltInZoomControls(true); 
+        MapController mMapController=mMapView.getController();
+        mMapController.setZoom(17);//设置地图zoom级别 
+        
+        TimerTask task=new TimerTask(){
+        	@Override
+            public void run() {
+        		String userId=GetClientSerialNumber();
+        		
+        		if(userId!=null && userId!="")
+        			userId=GetSerialNumber();
+        		
+        	String str=GetPostUtil.sendPost("http://222.66.97.54:8086/location/GetLastLocation","userID="+userId);
+        	String[] strArray=str.split(",");
+        	if(strArray.length==3)
+        	{
+        	       MyLocationOverlay myLocationOverlay = new MyLocationOverlay(mMapView);
+        	       LocationData locData = new LocationData();
+        	       locData.latitude=Double.parseDouble(strArray[0]);
+        	       locData.longitude=Double.parseDouble(strArray[1]);
+        	       //mTextView.setText("更新:"+strArray[2]+" 序号:"+userId);
+        	       myLocationOverlay.setData(locData);
+        	       mMapView.getOverlays().add(myLocationOverlay);  
+        	       mMapView.refresh();  
+        	       mMapView.getController().animateTo(new GeoPoint((int)(locData.latitude*1e6),  
+        	    		   (int)(locData.longitude* 1e6)));
+        	}
+        		}
+             
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 1 * 1000, 60 * 1000);
+    }
+	public String GetClientSerialNumber()
+	{
+		return preferences.getString("Controlled_Serial_Number", null);
+	}
+	public String GetSerialNumber()
+	{
+		return preferences.getString("Serial_Number", null);
+	}
+}
