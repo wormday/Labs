@@ -45,7 +45,7 @@ namespace MinMVC
         {
             variables = new Dictionary<string, object>();
             string[] strArray1 = requestUrl.Split('/');
-            string[] strArray2 = requestUrl.Split('/');
+            string[] strArray2 = this.Url.Split('/');
             if (strArray1.Length != strArray2.Length)
             {
                 return false;

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">灾害监测</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="acceler">正在检测震动...</string>
+    <string name="capt">拍照中...</string>
+    <string name="upload">上传中...</string>
+</resources>

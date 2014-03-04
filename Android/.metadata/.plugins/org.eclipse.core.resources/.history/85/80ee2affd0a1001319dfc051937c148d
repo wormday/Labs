@@ -1,0 +1,122 @@
+package com.swq.disastermonitoring;
+
+import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.map.LocationData;
+import com.baidu.mapapi.map.MapController;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationOverlay;
+import com.baidu.platform.comapi.basestruct.GeoPoint;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.view.Menu;
+import java.util.TimerTask;
+import java.util.Timer;
+
+public class MainActivity extends Activity {
+	private TextView mTextView;
+	private BMapManager mBMapMan = null;
+	private MapView mMapView = null;
+	private SharedPreferences preferences;
+	private SharedPreferences.Editor editor;
+	private String userId;
+
+	private Intent intentLocation,intentAcc,intentCapt;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		intentLocation=new Intent(this,LocationService.class);
+		intentAcc=new Intent(this,AccelerometerService.class);
+		intentCapt=new Intent(this,CaptureImageActivity.class);
+		
+		preferences = getSharedPreferences("PRIVATE", Activity.MODE_PRIVATE);
+		editor=preferences.edit();
+		userId = GetSerialNumber();//获取随机生成的序列号
+		
+		mBMapMan = new BMapManager(getApplication());
+		mBMapMan.init("HGomeGAw8R5vGL9mwX8W99CC", null);
+
+		// 注意：请在试用setContentView前初始化BMapManager对象，否则会报错
+		setContentView(R.layout.activity_main);
+		mTextView = (TextView) findViewById(R.id.tv1);
+		mMapView = (MapView) findViewById(R.id.bmapsView);
+		mMapView.setBuiltInZoomControls(true);
+		MapController mMapController = mMapView.getController();
+		mMapController.setZoom(17);// 设置地图zoom级别
+
+		TimerTask taskLocal = new TimerTask() {
+			@Override
+			public void run() {
+				//String userId = GetSerialNumber();//获取随机生成的序列号
+				String str = GetPostUtil.sendPost(
+						"http://222.66.97.54:8086/location/GetLastLocation",
+						"userID=" + userId);
+				String[] strArray = str.split(",");
+				if (strArray.length == 3) {
+					MyLocationOverlay myLocationOverlay = new MyLocationOverlay(
+							mMapView);
+					LocationData locData = new LocationData();
+					locData.latitude = Double.parseDouble(strArray[0]);
+					locData.longitude = Double.parseDouble(strArray[1]);
+
+					myLocationOverlay.setData(locData);
+					mMapView.getOverlays().add(myLocationOverlay);
+					mMapView.refresh();
+					mMapView.getController().animateTo(
+							new GeoPoint((int) (locData.latitude * 1e6),
+									(int) (locData.longitude * 1e6)));
+				}
+			}
+
+		};
+		Timer timerLocal = new Timer();
+		timerLocal.schedule(taskLocal, 1 * 1000, 60 * 1000);
+		
+		TimerTask taskActivity = new TimerTask() {
+			private int i=0;
+			@Override
+			public void run() {
+				if(i==0)
+				{
+					startActivity(intentAcc);
+					i=1;
+				}
+				else
+				{
+					startActivity(intentAcc);
+					i=0;
+				}
+			}
+		};
+		
+		Timer timerActivity = new Timer();
+		timerActivity.schedule(taskActivity, 10 * 1000, 60 * 1000);
+		
+
+		//startService(intentLocation);
+		//startService(intentAcc);
+
+		
+	}
+
+	private String GetSerialNumber() {
+		String serialNumber = preferences.getString("Serial_Number",  null);
+		if (serialNumber == null) {
+			serialNumber = Integer.toString((int) (Math.random() * 100000000));
+			editor.putString("Serial_Number", serialNumber);
+			editor.commit();
+		}
+		return serialNumber;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+}

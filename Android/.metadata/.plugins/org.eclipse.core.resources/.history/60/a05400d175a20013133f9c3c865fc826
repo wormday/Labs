@@ -1,0 +1,6 @@
+package com.swq.disastermonitoring;
+
+public class PhotoUploadActivity:extends Activity  {
+
+	
+}

@@ -12,7 +12,7 @@ namespace MinMVC
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            RouteTable.Routes.Add("default", new Route { Url = "{Controller}/{action}" });
+            RouteTable.Routes.Add("default", new Route { Url = "{controller}/{action}" });
             ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory());
         }
 

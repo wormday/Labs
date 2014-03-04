@@ -1,0 +1,56 @@
+package com.swq.disastermonitoring;
+import android.os.Bundle;
+import android.app.Service;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.widget.EditText;
+
+public class AccelerometerTest extends Service implements SensorEventListener {
+
+	private SensorManager sensorManager;
+	public double accelervalue;
+	public int countNum;
+	
+	@Override
+	public void onCreate()
+	{
+		super.onCreate();
+		accelervalue=0;
+		countNum=0;
+		sensorManager=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		sensorManager.registerListener(this, 
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				sensorManager.SENSOR_DELAY_UI);
+	}
+	@Override
+	protected void onStop()
+	{
+		sensorManager.unregisterListener(this);
+		super.onStop();
+	}
+	
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		float[] values=event.values;
+		StringBuilder sb=new StringBuilder();
+		double  a=java.lang.Math.sqrt(values[0]*values[0]+values[1]*values[1]+values[2]*values[2]);
+		accelervalue+=a;
+		countNum++;
+	}
+
+}

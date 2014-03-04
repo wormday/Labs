@@ -1,0 +1,169 @@
+package com.swq.tracker;
+
+import java.io.IOException;
+
+import android.app.Activity;
+import android.view.*;
+import android.view.SurfaceHolder.Callback;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.os.*;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.hardware.*;
+import android.util.*;
+import android.service.notification.*;
+import android.hardware.Camera.*;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+
+
+public class CaptureImageActivity extends Activity {
+SurfaceView sView;
+SurfaceHolder surfaceHolder;
+int screenWidth,screenHeight;
+Camera camera;
+boolean isPreview=false;
+@Override
+public void onCreate(Bundle savedInstanceState)
+{
+	super.onCreate(savedInstanceState);
+	requestWindowFeature(Window.FEATURE_NO_TITLE);
+	getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	setContentView(R.layout.capture_image);
+	WindowManager wm=getWindowManager();
+	Display display=wm.getDefaultDisplay();
+	DisplayMetrics metrics=new DisplayMetrics();
+	
+	display.getMetrics(metrics);
+	sView=(SurfaceView)findViewById(R.id.sView);
+	sView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+	surfaceHolder=sView.getHolder();
+	
+	surfaceHolder.addCallback(new Callback(){
+		@Override
+		public void surfaceChanged(SurfaceHolder holder,int format,int width,int height)
+		{
+
+		}
+		@Override
+		public void surfaceCreated(SurfaceHolder holder)
+		{
+			initCamera();
+		}
+		@Override
+		public void surfaceDestroyed(SurfaceHolder holder)
+		{
+			if(camera!=null)
+			{
+				if(isPreview)
+				{
+					camera.stopPreview();
+					camera.release();
+					camera=null;
+				}
+				
+			}
+		}
+	});
+}
+private void initCamera()
+{
+	if(!isPreview)
+	{
+		camera=Camera.open(0);
+		camera.setDisplayOrientation(90);
+	}
+	if(camera!=null && !isPreview)
+	{
+		try{
+			Camera.Parameters parameters=camera.getParameters();
+			parameters.setPreviewSize(screenWidth, screenHeight);
+			parameters.setPreviewFpsRange(4, 10);
+			parameters.setPictureFormat(ImageFormat.JPEG);
+			parameters.set("jpeg-quality", 85);
+			parameters.setPictureSize(screenWidth, screenHeight);
+			camera.setPreviewDisplay(surfaceHolder);
+			camera.startPreview();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		isPreview=true;
+	}
+	}
+
+public void Capture(View source)
+{
+	if(camera!=null)
+	{
+		camera.autoFocus(autoFocusCallback);
+	}
+}
+AutoFocusCallback autoFocusCallback=new AutoFocusCallback()
+{
+	@Override
+	public void onAutoFocus(boolean success,Camera camera)
+	{
+		if(success)
+		{
+			camera.takePicture(new ShutterCallback(){
+				public void onShutter()
+				{
+					
+				}
+			}, 
+			new PictureCallback(){
+				public void onPictureTaken(byte[] data,Camera c)
+				{
+					
+				}
+			}, 
+			myJpegCallback);
+		}
+	}
+	};
+	
+	PictureCallback myJpegCallback=new PictureCallback()
+	{
+		@Override
+		public void onPictureTaken(byte[] data,Camera camera)
+		{
+			final Bitmap bm=BitmapFactory.decodeByteArray(data, 0, data.length);
+			View saveDialog=getLayoutInflater().inflate(R.layout.save, null);
+			final EditText photoName=(EditText)saveDialog.findViewById(R.id.phone_name);
+			ImageView show=(ImageView)saveDialog.findViewById(R.id.show);
+			show.setImageBitmap(bm);
+			new AlertDialog.Builder(CaptureImageActivity.this).setView(saveDialog)
+				.setPositiveButton("±£´æ",new OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog,int which)
+					{
+						File file=new File(Environment.getExternalStorageDirectory(),photoName.getText().toString()+".jpg");
+						FileOutputStream outStream=null;
+						try
+						{
+							OutStream=new FileOutputStream(file);
+							bm.compress(CompressFormat.JPEG, 100, OutStream);
+							outStream.close();
+						}
+						catch(IOException e)
+						{
+							e.printStackTrace();
+							
+						}
+					}
+					
+				}).setNegativeButton("È¡Ïû",null).show();
+			camera.stopPreview();
+			camera.startPreview();
+			isPreview=true;
+		}
+		
+	};
+	
+}
+
