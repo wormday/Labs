@@ -1,0 +1,31 @@
+﻿@model Hrm.WebApp.Models.Employee.ListVModel
+@{
+    ViewBag.Title = "员工信息列表";
+}
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>工号</th>
+            <th>姓名</th>
+            <th>证件</th>
+            <th>入职</th>
+            <th>离职</th>
+            <th>备注</th>
+        </tr>
+
+        @foreach (var item in Model.EmployeeEntities)
+        { 
+            <tr>
+                <td>@item.EmployeeID</td>
+                <td>@item.JobNumber</td>
+                <td>@item.Name</td>
+                <td>@item.IDCard</td>
+                <td>@item.JoinDate</td>
+                <td>@item.LeaveDate</td>
+                <td>@item.Remark</td>
+            </tr>  
+        }
+    </table>
+</fieldset>

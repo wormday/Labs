@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Hrm.BLL.Entities;
-using Hrm.WebApp.Models.Position;
+using Hrm.WebApp.Models.Employee;
 
 namespace Hrm.WebApp.Controllers
 {
-    public class PositionController : Controller
+    public class EmployeeController : Controller
     {
         #region 列表
         [HttpGet]
@@ -17,7 +17,7 @@ namespace Hrm.WebApp.Controllers
             ListVModel vModel = new ListVModel();
             using (HrmContext db = new HrmContext())
             {
-                vModel.PositionEntities = db.PositionEntities.ToList();
+                vModel.EmployeeEntities = db.EmployeeEntities.ToList();
             }
             return View(vModel);
         }
@@ -31,7 +31,7 @@ namespace Hrm.WebApp.Controllers
             {
                 using (HrmContext db = new HrmContext())
                 {
-                    db.PositionEntities.Add(vModel.PositionEntity);
+                    db.EmployeeEntities.Add(vModel.EmployeeEntity);
                     db.SaveChanges();
                     return RedirectToAction("List");
                 }
@@ -50,8 +50,8 @@ namespace Hrm.WebApp.Controllers
         {
             using (HrmContext db = new HrmContext())
             {
-                var entity = db.PositionEntities.Single(o => o.PositionID == id);
-                db.PositionEntities.Remove(entity);
+                var entity = db.EmployeeEntities.Single(o => o.EmployeeID == id);
+                db.EmployeeEntities.Remove(entity);
                 db.SaveChanges();
             }
             return RedirectToAction("List");
@@ -65,7 +65,7 @@ namespace Hrm.WebApp.Controllers
             EditVModel vModel = new EditVModel();
             using (HrmContext db = new HrmContext())
             {
-                vModel.PositionEntity = db.PositionEntities.Single(o => o.PositionID == id);
+                vModel.EmployeeEntity = db.EmployeeEntities.Single(o => o.EmployeeID == id);
             }
             return View(vModel);
         }
@@ -76,8 +76,13 @@ namespace Hrm.WebApp.Controllers
             {
                 using (HrmContext db = new HrmContext())
                 {
-                    var entity = db.PositionEntities.Single(o => o.PositionID == vModel.PositionEntity.PositionID);
-                    entity.PositionName = vModel.PositionEntity.PositionName;
+                    var entity = db.EmployeeEntities.Single(o => o.EmployeeID == vModel.EmployeeEntity.EmployeeID);
+                    entity.IDCard = vModel.EmployeeEntity.IDCard;
+                    entity.JobNumber = vModel.EmployeeEntity.JobNumber;
+                    entity.JoinDate = vModel.EmployeeEntity.JoinDate;
+                    entity.LeaveDate = vModel.EmployeeEntity.LeaveDate;
+                    entity.Name = vModel.EmployeeEntity.Name;
+                    entity.Remark = vModel.EmployeeEntity.Remark;
                     db.SaveChanges();
                     return RedirectToAction("List");
                 }
@@ -85,5 +90,6 @@ namespace Hrm.WebApp.Controllers
             return View(vModel);
         }
         #endregion
+
     }
 }

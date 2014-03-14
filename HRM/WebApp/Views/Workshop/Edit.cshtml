@@ -1,0 +1,11 @@
+﻿@model Hrm.WebApp.Models.Workshop.EditVModel
+@{
+    ViewBag.Title = "Edit";
+}
+<h2>Create</h2>
+@using (Html.BeginForm())
+{ 
+    @Html.HiddenFor(o=>o.WorkshopEntity.WorkshopID)
+    @Html.TextBoxFor(o => o.WorkshopEntity.WorkShopName)
+    <input type="submit" value="提交" />
+}

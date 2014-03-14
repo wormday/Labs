@@ -8,9 +8,38 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <div id="main">
+    <div id='cssmenu'>
+        <ul>
+            <li class='active'><a href='index.html'><span>首页</span></a></li>
+            <li class='has-sub'><a href='#'><span>P</span></a>
+                <ul>
+                    <li class='has-sub'><a href='#'><span>Product 1</span></a>
+                        <ul>
+                            <li><a href='#'><span>Sub Item</span></a></li>
+                            <li class='last'><a href='#'><span>Sub Item</span></a></li>
+                        </ul>
+                    </li>
+                    <li class='has-sub'><a href='#'><span>Product 2</span></a>
+                        <ul>
+                            <li><a href='#'><span>Sub Item</span></a></li>
+                            <li class='last'><a href='#'><span>Sub Item</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class='has-sub'><a href='#'><span>基础信息维护</span></a>
+                <ul>
+                    <li><a href='#'><span>车间</span></a></li>
+                    <li class='last'><a href='#'><span>岗位</span></a></li>
+                </ul>
+            </li>
+            <li class='last'><a href='#'><span>管理员</span></a></li>
+        </ul>
+    </div>
     @RenderBody()
-
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
+    </div>
 </body>
 </html>

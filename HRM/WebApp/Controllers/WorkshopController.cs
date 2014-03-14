@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Hrm.BLL.Entities;
-using Hrm.WebApp.Models.Position;
+using Hrm.WebApp.Models.Workshop;
 
 namespace Hrm.WebApp.Controllers
 {
-    public class PositionController : Controller
+    public class WorkshopController : Controller
     {
         #region 列表
         [HttpGet]
@@ -17,7 +17,7 @@ namespace Hrm.WebApp.Controllers
             ListVModel vModel = new ListVModel();
             using (HrmContext db = new HrmContext())
             {
-                vModel.PositionEntities = db.PositionEntities.ToList();
+                vModel.WorkshopEntities = db.WorkshopEntities.ToList();
             }
             return View(vModel);
         }
@@ -31,7 +31,7 @@ namespace Hrm.WebApp.Controllers
             {
                 using (HrmContext db = new HrmContext())
                 {
-                    db.PositionEntities.Add(vModel.PositionEntity);
+                    db.WorkshopEntities.Add(vModel.WorkshopEntity);
                     db.SaveChanges();
                     return RedirectToAction("List");
                 }
@@ -50,8 +50,8 @@ namespace Hrm.WebApp.Controllers
         {
             using (HrmContext db = new HrmContext())
             {
-                var entity = db.PositionEntities.Single(o => o.PositionID == id);
-                db.PositionEntities.Remove(entity);
+                var entity = db.WorkshopEntities.Single(o => o.WorkshopID == id);
+                db.WorkshopEntities.Remove(entity);
                 db.SaveChanges();
             }
             return RedirectToAction("List");
@@ -65,7 +65,7 @@ namespace Hrm.WebApp.Controllers
             EditVModel vModel = new EditVModel();
             using (HrmContext db = new HrmContext())
             {
-                vModel.PositionEntity = db.PositionEntities.Single(o => o.PositionID == id);
+                vModel.WorkshopEntity = db.WorkshopEntities.Single(o => o.WorkshopID == id);
             }
             return View(vModel);
         }
@@ -76,8 +76,8 @@ namespace Hrm.WebApp.Controllers
             {
                 using (HrmContext db = new HrmContext())
                 {
-                    var entity = db.PositionEntities.Single(o => o.PositionID == vModel.PositionEntity.PositionID);
-                    entity.PositionName = vModel.PositionEntity.PositionName;
+                    var entity = db.WorkshopEntities.Single(o => o.WorkshopID == vModel.WorkshopEntity.WorkshopID);
+                    entity.WorkShopName = vModel.WorkshopEntity.WorkShopName;
                     db.SaveChanges();
                     return RedirectToAction("List");
                 }

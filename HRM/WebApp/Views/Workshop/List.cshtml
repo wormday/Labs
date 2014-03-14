@@ -1,0 +1,27 @@
+﻿@model Hrm.WebApp.Models.Workshop.ListVModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>编号</th>
+        <th>岗位名称</th>
+    </tr>
+
+@foreach (var item in Model.WorkshopEntities) {
+    <tr>
+        <td>
+            @item.WorkshopID
+            @item.WorkShopName
+        </td>
+    </tr>
+}
+
+</table>

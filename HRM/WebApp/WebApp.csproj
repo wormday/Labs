@@ -130,17 +130,27 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\WorkshopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Employee\CreateVModel.cs" />
+    <Compile Include="Models\Employee\EditVModel.cs" />
+    <Compile Include="Models\Employee\ListVModel.cs" />
     <Compile Include="Models\Position\CreateVModel.cs" />
     <Compile Include="Models\Position\EditVModel.cs" />
     <Compile Include="Models\Position\ListVModel.cs" />
+    <Compile Include="Models\Workshop\CreateVModel.cs" />
+    <Compile Include="Models\Workshop\EditVModel.cs" />
+    <Compile Include="Models\Workshop\ListVModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\body_bg.jpg" />
+    <Content Include="Content\menu.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -211,6 +221,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\menu.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -228,6 +239,10 @@
     <Content Include="Views\Position\List.cshtml" />
     <Content Include="Views\Position\Create.cshtml" />
     <Content Include="Views\Position\Edit.cshtml" />
+    <Content Include="Views\Workshop\Create.cshtml" />
+    <Content Include="Views\Workshop\Edit.cshtml" />
+    <Content Include="Views\Workshop\List.cshtml" />
+    <Content Include="Views\Employee\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

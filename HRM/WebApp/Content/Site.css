@@ -2,7 +2,9 @@
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url(/Content/images/body_bg.jpg);
+    margin:0px;
 }
 
 header, footer, nav, section {
@@ -59,3 +61,90 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+
+fieldset
+{
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #CCC;
+}
+
+    fieldset p
+    {
+        margin: 2px 12px 10px 10px;
+    }
+/**----------------------------------*/
+div#main
+{
+    margin:0px auto;
+    width:1000px;
+}
+/**----------------------------------*/
+legend
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+div.tr
+{
+    padding: 0px 0px 15px 0px;
+    line-height: 24px;
+    height:24px;
+    font-size:14px;
+}
+
+    div.tr label
+    {
+        width: 131px;
+        height: 24px;
+        line-height: 24px;
+        text-align: right;
+        float: left;
+        font-size: 14px;
+    }
+
+    div.tr input[type="text"],select
+    {
+        height: 24px;
+        width:230px;
+        line-height: 24px;
+        padding-left: 2px;
+        font-size: 14px;
+        margin:0px 5px 0px 2px;
+        display:block;
+        float:left
+        
+    }
+    div.tr select
+    {
+        height: 28px;
+    }
+    div.tr label.error
+    {
+        width:auto;
+        display:block;
+        float:left
+    }
+
+/* TABLE----------------------------------------------------------*/
+
+table
+{
+    border: solid 1px #a8d496;
+    border-collapse: collapse;
+}
+
+    table td
+    {
+        padding: 5px;
+        border: solid 1px #a8d496;
+    }
+
+    table th
+    {
+        padding: 6px 5px;
+        text-align: left;
+        background-color: #c5edb4;
+        border: solid 1px #a8d496;
+    }
