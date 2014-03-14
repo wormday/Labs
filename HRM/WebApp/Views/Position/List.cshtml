@@ -1,0 +1,27 @@
+﻿@model Hrm.WebApp.Models.Position.ListVModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>编号</th>
+        <th>岗位名称</th>
+    </tr>
+
+@foreach (var item in Model.PositionEntities) {
+    <tr>
+        <td>
+            @item.PositionID
+            @item.PositionName
+        </td>
+    </tr>
+}
+
+</table>

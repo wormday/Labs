@@ -1,0 +1,11 @@
+﻿@model Hrm.WebApp.Models.Position.EditVModel
+@{
+    ViewBag.Title = "Edit";
+}
+<h2>Create</h2>
+@using (Html.BeginForm())
+{ 
+    @Html.HiddenFor(o=>o.PositionEntity.PositionID)
+    @Html.TextBoxFor(o => o.PositionEntity.PositionName)
+    <input type="submit" value="提交" />
+}

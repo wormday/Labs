@@ -1,0 +1,10 @@
+﻿@model Hrm.WebApp.Models.Position.CreateVModel
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Create</h2>
+@using (Html.BeginForm())
+{ 
+    @Html.TextBoxFor(o => o.PositionEntity.PositionName)
+    <input type="submit" value="提交" />
+}
