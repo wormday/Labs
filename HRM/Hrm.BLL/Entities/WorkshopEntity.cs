@@ -12,6 +12,9 @@ namespace Hrm.BLL.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WorkshopID { get; set; }
+        [StringLength(50)]
+        [Required]
         public string WorkShopName { get; set; }
+        public string Color { get; set; }
     }
 }

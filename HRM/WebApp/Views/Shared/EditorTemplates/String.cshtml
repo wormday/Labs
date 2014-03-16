@@ -1,0 +1,24 @@
+﻿@using System.Collections;
+@using System.Collections.Generic;
+@model String
+@{
+    IDictionary<string, object> htmlAttri = new Dictionary<string, object>();
+    htmlAttri.Add("class", "string");
+    if (ViewData["style"] != null)
+    {
+        if (!htmlAttri.ContainsKey("style"))
+        {
+            htmlAttri.Add("style", ViewData["style"]);
+        }
+        else
+        {
+            htmlAttri["style"] = htmlAttri["style"].ToString() + ViewData["style"].ToString();
+        }
+    }
+    if (ViewData["Required"] != null && ((bool)ViewData["Required"]) == true)
+    {
+        htmlAttri["data-val-required"] = "*";
+        htmlAttri["data-val"] = "true";
+    }
+    @Html.TextBoxFor(model=>model, htmlAttri)
+}

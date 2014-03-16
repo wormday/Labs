@@ -1,0 +1,10 @@
+﻿@model Hrm.WebApp.Models.Workshop.EditVModel
+@{
+    Layout = null;
+}
+@using (Html.BeginForm())
+{ 
+    @Html.HiddenFor(o=>o.WorkshopEntity.WorkshopID)
+    <div class="tr">
+        <label>车间名称：</label>@Html.TextBoxFor(o => o.WorkshopEntity.WorkShopName)</div>
+}

@@ -1,0 +1,21 @@
+﻿@using Hrm.WebApp.Common.HtmlHelper
+@model Hrm.WebApp.Models.Employee.AddWorkshopPositionVModel
+@{
+    Layout = null;
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(o => o.EmployeeID);
+    <div class="tr">
+        <label>日期范围：</label>@Html.EditorFor(o => o.StartDate)  @Html.EditorFor(o => o.EndDate)
+    </div>
+    <div class="tr">
+        <label>岗位：</label>@Html.PositionDropDownListFor(o => o.PositionID, null, "-请选择-", null)
+    </div>
+    <div class="tr">
+        <label>车间：</label>@Html.WorkshopDropDownListFor(o => o.WorkshopID, null, "-请选择-", null)
+    </div>
+}
+<script type="text/javascript">
+    $(".datepicker").datepicker({ "dateFormat": "yy-mm-dd" });
+</script>

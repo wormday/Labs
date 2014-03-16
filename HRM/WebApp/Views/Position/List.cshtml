@@ -1,27 +1,41 @@
 ﻿@model Hrm.WebApp.Models.Position.ListVModel
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "岗位信息维护";
 }
 
-<h2>List</h2>
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    <div class="buttonset" style="padding: 5px;"><a href="Create" class="dialogOpener" dialogcallback="dialogCallBack" dialogwidth="450" dialogheight="180" dialogtitle="添加新岗位">添加新岗位</a></div>
+    <table>
+        <tr>
+            <th>编号</th>
+            <th style="width: 200px;">岗位名称</th>
+            <th>颜色</th>
+            <th>操作</th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>编号</th>
-        <th>岗位名称</th>
-    </tr>
+        @foreach (var item in Model.PositionEntities)
+        {
+            <tr>
+                <td style="text-align: center">@item.PositionID</td>
+                <td>@item.PositionName</td>
+                <td style="background-color:@item.Color">@item.Color</td>
+                <td><a href="/Position/Edit/@item.PositionID" class="dialogOpener" dialogcallback="dialogCallBack" dialogwidth="450" dialogheight="180" dialogtitle="修改岗位">修改</a>
+                    <a href="/Position/Remove/@item.PositionID">删除</a></td>
+            </tr>
+        }
 
-@foreach (var item in Model.PositionEntities) {
-    <tr>
-        <td>
-            @item.PositionID
-            @item.PositionName
-        </td>
-    </tr>
+    </table>
+</fieldset>
+@section scripts
+{
+    <script type="text/javascript">
+        function dialogCallBack() {
+                location.reload();
+        }
+        $(function () {
+            $("a.dialogOpener").click(common.ShowCommonDialog);
+        })
+    </script>
 }
-
-</table>

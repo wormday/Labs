@@ -1,0 +1,23 @@
+﻿@model Hrm.WebApp.Models.Employee.CreateVModel
+@{
+    ViewBag.Title = "添加员工";
+}
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    @using (Html.BeginForm())
+    {
+        <div class="tr">
+            <label>姓名：</label>@Html.TextBoxFor(o => o.EmployeeEntity.Name)</div>
+        <div class="tr">
+            <label>工号：</label>@Html.TextBoxFor(o => o.EmployeeEntity.JobNumber)</div>
+        <div class="tr">
+            <label>身份证号码：</label>@Html.EditorFor(o => o.EmployeeEntity.IDCard)</div>
+        <div class="tr">
+            <label>入职日期：</label>@Html.EditorFor(o => o.EmployeeEntity.JoinDate)</div>
+        <div class="tr">
+            <label>离职日期：</label>@Html.EditorFor(o => o.EmployeeEntity.LeaveDate)</div>
+        <div class="tr">
+            <label>备注：</label>@Html.TextBoxFor(o => o.EmployeeEntity.Remark)</div>
+        <div class="tr"><label></label><input type="submit" value="提交" /> <a href="List" class="button">返回</a></div>
+    }
+</fieldset>

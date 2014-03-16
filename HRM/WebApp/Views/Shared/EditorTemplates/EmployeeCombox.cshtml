@@ -1,0 +1,28 @@
+﻿@using System.Web.Mvc
+@model int
+@{
+    @MvcHtmlString.Create(Html.IncludeScript("~/WebApi/Employee"));
+    @MvcHtmlString.Create(Html.IncludeScript("~/Scripts/commonCtrl.js"));
+    IDictionary<string, object> htmlAttri = new Dictionary<string, object>();
+    htmlAttri.Add("class", "employee");
+    htmlAttri.Add("txtTag", ViewData["CtrlTag"]);
+
+    @Html.TextBox("txtOperate", null, htmlAttri)
+
+    IDictionary<string, object> htmlAttri2 = new Dictionary<string, object>();
+    htmlAttri2.Add("ctrlTag", ViewData["CtrlTag"]);
+    @Html.HiddenFor(Model => Model, htmlAttri2)
+          
+    <script type="text/javascript">
+        $(function () {
+            var hiddenCtrlId = "[ctrlTag='" + '@ViewData["ctrlTag"]' + "']";
+            var txtCtrlId = "[txtTag='" + '@ViewData["ctrlTag"]' + "']";
+            $(hiddenCtrlId).prev().keyup(function () {
+                if (this.value == "" || this.value == null || this.value == undefined) {
+                    $(hiddenCtrlId).val(0);
+                }
+            });
+            TextAutocomplete(hiddenCtrlId, txtCtrlId);
+        });
+    </script>
+}

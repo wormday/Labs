@@ -1,0 +1,9 @@
+﻿@model Hrm.WebApp.Models.Workshop.CreateVModel
+@{
+    Layout = null;
+}
+@using (Html.BeginForm())
+{ 
+    <div class="tr">
+        <label>车间名称：</label>@Html.TextBoxFor(o => o.WorkshopEntity.WorkShopName)</div>
+}

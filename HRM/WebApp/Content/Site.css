@@ -2,7 +2,9 @@
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url(/Content/images/body_bg.jpg);
+    margin:0px;
 }
 
 header, footer, nav, section {
@@ -58,4 +60,150 @@ textarea {
 
 .validation-summary-valid {
     display: none;
+}
+
+fieldset
+{
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #CCC;
+}
+
+    fieldset p
+    {
+        margin: 2px 12px 10px 10px;
+    }
+/**----------------------------------*/
+div#main
+{
+    margin:0px auto;
+    width:1000px;
+}
+/**----------------------------------*/
+legend
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+div.tr
+{
+    padding: 0px 0px 15px 0px;
+    line-height: 24px;
+    height:24px;
+    font-size:14px;
+}
+
+    div.tr label
+    {
+        width: 131px;
+        height: 24px;
+        line-height: 24px;
+        text-align: right;
+        float: left;
+        font-size: 14px;
+    }
+
+    div.tr input[type="text"],select
+    {
+        height: 24px;
+        width:230px;
+        line-height: 24px;
+        padding-left: 2px;
+        font-size: 14px;
+        margin:0px 5px 0px 2px;
+        display:block;
+        float:left
+        
+    }
+    div.tr select
+    {
+        height: 28px;
+    }
+    div.tr label.error
+    {
+        width:auto;
+        display:block;
+        float:left
+    }
+
+/* TABLE----------------------------------------------------------*/
+
+table
+{
+    border: solid 1px rgb(231, 143, 8);
+    border-collapse: collapse;
+}
+
+    table td
+    {
+        padding: 5px;
+        border: solid 1px rgb(231, 143, 8);
+		background-color:#FFF
+    }
+
+    table th
+    {
+        padding: 6px 5px;
+        text-align: left;
+        background-color: rgb(246, 168, 40);
+		color:#FFF;
+        border: solid 1px rgb(231, 143, 8);
+    }
+
+/*----------------------------*/
+input[type="text"]
+{
+    width: 160px;
+    border: 1px solid #CCC;
+}
+
+input[type="password"]
+{
+    width: 200px;
+    border: 1px solid #CCC;
+}
+
+input.datepicker
+{
+    text-align: center;
+    background-image: url("/Images/calendar.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+    padding-right: 18px;
+    width: 78px;
+}
+
+input.currency, input.string, input.phonenumber, input.idcard,input.employee 
+{
+    padding-top: 3px;
+    height: 16px;
+    padding-left: 22px !important;
+    background-repeat: no-repeat;
+    background-position: 2px center;
+}
+
+
+input.currency
+{
+    background-image: url(/Content/images/rmb.png);
+}
+
+input.string
+{
+    background-image: url(/Content/images/string.png);
+}
+
+input.phonenumber
+{
+    background-image: url(/Content/images/phone.png);
+}
+
+input.idcard
+{
+    background-image: url(/Content/images/idcard.gif);
+}
+input.employee 
+{
+    background-image: url(/Content/images/icon/16/person.png);
 }

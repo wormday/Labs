@@ -1,0 +1,57 @@
+﻿@model Hrm.WebApp.Models.Employee.DetailsVModel
+@{
+    ViewBag.Title = "员工详情 - " + Model.EmployeeEntity.Name;
+}
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    <div class="buttonset" style="padding: 5px;">
+        <a href="/Employee/AddWorkshopPosition/@Model.EmployeeEntity.EmployeeID" class="dialogOpener" dialogCallback="dialogCallBack" dialogwidth="500" dialogheight="260" dialogtitle="添加部门岗位-@Model.EmployeeEntity.Name">添加部门岗位</a>
+        <a href="/Employee/List" class="button">返回</a>
+    </div>
+    <div class="tr">
+        <label>姓名：</label>@Model.EmployeeEntity.Name
+    </div>
+    <div class="tr">
+        <label>工号：</label>@Model.EmployeeEntity.JobNumber
+    </div>
+    <div class="tr">
+        <label>身份证号码：</label>@Model.EmployeeEntity.IDCard
+    </div>
+    <div class="tr">
+        <label>入职日期：</label>@Model.EmployeeEntity.JoinDate
+    </div>
+    <div class="tr">
+        <label>离职日期：</label>@Model.EmployeeEntity.LeaveDate
+    </div>
+    <div class="tr">
+        <label>备注：</label>@Model.EmployeeEntity.Remark
+    </div>
+    <table>
+        <tr>
+            <th style="width: 140px; text-align:center">时间</th>
+            <th style="width: 60px;text-align:center">天数</th>
+            <th style="width: 200px">车间</th>
+            <th style="width: 200px">岗位</th>
+        </tr>
+        @foreach (var item in Model.EmployeeEntity.EmployeePositionEntities)
+        {
+            <tr>
+                <td style="text-align:center">@item.StartDate.ToString("yyyy/MM/dd") - @item.EndDate.ToString("MM/dd")</td>
+                <td style="text-align:center">@((item.EndDate - item.StartDate).TotalDays + 1)</td>
+                <td>@item.WorkshopEntity.WorkShopName</td>
+                <td>@item.PositionEntity.PositionName</td>
+            </tr>
+        }
+    </table>
+</fieldset>
+@section scripts
+{
+    <script type="text/javascript">
+        function dialogCallBack() {
+            location.reload();
+        }
+        $(function () {
+            $("a.dialogOpener").click(common.ShowCommonDialog);
+        })
+    </script>
+}

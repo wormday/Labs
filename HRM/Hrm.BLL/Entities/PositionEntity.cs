@@ -13,6 +13,8 @@ namespace Hrm.BLL.Entities
         [Key][DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PositionID { get; set; }
         [StringLength(50)]
+        [Required]
         public string PositionName { get; set; }
+        public string Color { get; set; }
     }
 }

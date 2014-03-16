@@ -12,10 +12,15 @@ namespace Hrm.BLL.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int EmployeePositionID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public PositionEntity PositionEntity { get; set; }
-        public WorkshopEntity WorkshopEntity { get; set; }
+        [Required]
+        public int PositionID { get; set; }
+        [Required]
+        public int WorkshopID { get; set; }
+        public virtual PositionEntity PositionEntity { get; set; }
+        public virtual WorkshopEntity WorkshopEntity { get; set; }
     }
 }

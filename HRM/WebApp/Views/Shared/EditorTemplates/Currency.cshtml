@@ -1,0 +1,24 @@
+﻿@using System.Collections;
+@using System.Collections.Generic;
+@model Decimal
+@{
+    IDictionary<string, object> htmlAttri = new Dictionary<string, object>();
+    htmlAttri.Add("class", "currency");
+    htmlAttri.Add("maxlength","9");
+    if (ViewData["style"] != null)
+    {
+        if (!htmlAttri.ContainsKey("style"))
+        {
+            htmlAttri.Add("style", ViewData["style"]);
+        }
+        else
+        {
+            htmlAttri["style"] = htmlAttri["style"].ToString() + ViewData["style"].ToString();
+        }
+        if(ViewData["readonly"]!=null)
+        {
+            htmlAttri.Add("readOnly", true);
+        }
+    }
+    @Html.TextBoxFor(model=>model, htmlAttri)
+}

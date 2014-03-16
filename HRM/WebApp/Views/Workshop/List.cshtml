@@ -1,0 +1,39 @@
+﻿@model Hrm.WebApp.Models.Workshop.ListVModel
+
+@{
+    ViewBag.Title = "车间信息维护";
+}
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    <div class="buttonset" style="padding:5px;"><a href="Create" class="dialogOpener" dialogcallback="dialogCallBack" dialogwidth="450" dialogheight="180" dialogtitle="添加新车间">添加新车间</a></div>
+<table>
+        <tr>
+            <th>编号</th>
+            <th style="width: 200px;">车间名称</th>
+            <th>颜色</th>
+            <th>操作</th>
+        </tr>
+
+@foreach (var item in Model.WorkshopEntities) {
+            <tr>
+                <td style="text-align: center">@item.WorkshopID</td>
+                <td>@item.WorkShopName</td>
+                <td  style="background-color:@item.Color">@item.Color</td>
+                <td><a href="/Workshop/Edit/@item.WorkshopID" class="dialogOpener" dialogcallback="dialogCallBack" dialogwidth="450" dialogheight="180" dialogtitle="修改车间">修改</a>
+                    <a href="/Workshop/Remove/@item.WorkshopID">删除</a></td>
+            </tr>
+}
+
+</table>
+</fieldset>
+@section scripts
+{
+    <script type="text/javascript">
+        function dialogCallBack() {
+                location.reload();
+        }
+        $(function () {
+            $("a.dialogOpener").click(common.ShowCommonDialog);
+        })
+    </script>
+}

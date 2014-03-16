@@ -27,6 +27,11 @@ namespace Hrm.BLL.Entities
         public DateTime JoinDate { get; set; }
         public DateTime? LeaveDate { get; set; }
 
-        public ICollection<EmployeePositionEntity> EmployeePositionEntities { get; set; }
+        public virtual ICollection<EmployeePositionEntity> EmployeePositionEntities { get; set; }
+
+        public void AddEmployeePosition(EmployeePositionEntity entity)
+        {
+            this.EmployeePositionEntities.Add(entity);
+        }
     }
 }
