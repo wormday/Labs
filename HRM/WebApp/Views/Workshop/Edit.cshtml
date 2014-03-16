@@ -1,5 +1,6 @@
 ﻿@model Hrm.WebApp.Models.Workshop.EditVModel
 @{
+<<<<<<< HEAD
     Layout = null;
 }
 @using (Html.BeginForm())
@@ -7,4 +8,14 @@
     @Html.HiddenFor(o=>o.WorkshopEntity.WorkshopID)
     <div class="tr">
         <label>车间名称：</label>@Html.TextBoxFor(o => o.WorkshopEntity.WorkShopName)</div>
+=======
+    ViewBag.Title = "Edit";
+}
+<h2>Create</h2>
+@using (Html.BeginForm())
+{ 
+    @Html.HiddenFor(o=>o.WorkshopEntity.WorkshopID)
+    @Html.TextBoxFor(o => o.WorkshopEntity.WorkShopName)
+    <input type="submit" value="提交" />
+>>>>>>> 9549854185571bc0c429797f099e2fd56ca321b6
 }
