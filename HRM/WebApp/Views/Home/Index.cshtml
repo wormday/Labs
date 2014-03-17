@@ -1,17 +1,75 @@
-﻿@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style>
+        li
+        {
+            width: 200px;
+            height: 30px;
+            margin: 20px;
+            border:1px dotted
+        }
+            li div.place
+            {
+                border:1px solid red;
+            }
+    </style>
 </head>
 <body>
     <div>
-        
+        <ul class="sortable">
+            <li>
+                <div>1</div>
+                <div class="place">DragBox</div>
+            </li>
+            <li>
+                <div>2</div>
+                <div class="place">DragBox</div>
+            </li>
+            <li>
+                <div>3</div>
+                <div class="place">DragBox</div>
+            </li>
+            <li>
+                <div>4</div>
+                <div class="place">DragBox</div>
+            </li>
+            <li>
+                <div>5</div>
+                <div class="place">DragBox</div>
+                <ul class="sortable">
+                    <li>
+                        <div>5.1</div>
+                        <div class="place">DragBox</div>
+                    </li>
+                    <li>
+                        <div>5.2</div>
+                        <div class="place">DragBox</div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </body>
 </html>
+<script>
+    $(function () {
+        $(".sortable").sortable({
+            delay: 300,
+            distance: 15,
+            connectWith: ".sortable"
+        });
+        $("li").disableSelection();
+        $(".place").draggable();
+        $(".place").droppable({
+            drop: function (event, ui) {
+                $(this)
+                  .addClass("ui-state-highlight")
+            },
+            hoverClass: "ui-state-active"
+        });
+    });
+</script>

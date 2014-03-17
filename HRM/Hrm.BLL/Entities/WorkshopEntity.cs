@@ -15,6 +15,19 @@ namespace Hrm.BLL.Entities
         [StringLength(50)]
         [Required]
         public string WorkShopName { get; set; }
+        [Required]
         public string Color { get; set; }
+        [Required]
+        public int Level { get; set; }
+        [Required]
+        public bool IsTeam { get; set; }
+
+        public int? ParentWorkshopID { get; set; }
+        [ForeignKey("ParentWorkshopID")]
+        public virtual WorkshopEntity ParentWorkshopEntity { get; set; }
+
+        [InverseProperty("ParentWorkshopEntity")]
+        public virtual ICollection<WorkshopEntity> ChildrenWorkshopEntities { get; set; }
+
     }
 }

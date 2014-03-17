@@ -14,8 +14,9 @@ namespace Hrm.BLL.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public int EmployeePositionID { get; set; }
+        [Required]
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         [Required]
         public int PositionID { get; set; }
         [Required]

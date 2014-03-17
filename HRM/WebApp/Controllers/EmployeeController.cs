@@ -109,36 +109,115 @@ namespace Hrm.WebApp.Controllers
         #endregion
 
         #region 添加岗位和车间
+
+        #region 离岗
         [HttpGet]
-        public ActionResult AddWorkshopPosition(int id)
+        public ActionResult LeavePosition(int id)
         {
-            AddWorkshopPositionVModel vModel = new AddWorkshopPositionVModel();
+            LeavePositionVModel vModel= new LeavePositionVModel();
             vModel.EmployeeID = id;
             vModel.EndDate = DateTime.Today;
-            vModel.StartDate = DateTime.Today;
             return View(vModel);
         }
         [HttpPost]
-        public ActionResult AddWorkshopPosition(AddWorkshopPositionVModel vModel)
+        public ActionResult LeavePosition(LeavePositionVModel vModel)
         {
             if (ModelState.IsValid)
-            { 
-                using(HrmContext db=new HrmContext())
+            {
+                try
                 {
-                    var entity = db.EmployeeEntities.Single(o => o.EmployeeID == vModel.EmployeeID);
-                    EmployeePositionEntity e = new EmployeePositionEntity();
-                    e.StartDate = vModel.StartDate;
-                    e.EndDate = vModel.EndDate;
-                    e.PositionID = vModel.PositionID;
-                    e.WorkshopID = vModel.WorkshopID;
-                    entity.AddEmployeePosition(e);
-                    db.SaveChanges();
-                    Response.Write("OK");
-                    return null;
+                    using (HrmContext db = new HrmContext())
+                    {
+                        var entity = db.EmployeeEntities
+                            .Include("EmployeePositionEntities")
+                            .Single(o => o.EmployeeID == vModel.EmployeeID);
+                        entity.LeavePosition(vModel.EndDate);
+                        db.SaveChanges();
+                        Response.Write("OK");
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
                 }
             }
             return View(vModel);
         }
+        #endregion
+
+        #region 入岗
+        [HttpGet]
+        public ActionResult JoinPosition(int id)
+        {
+            JoinPositionVModel vModel = new JoinPositionVModel();
+            vModel.EmployeeID = id;
+            vModel.StartDate = DateTime.Today;
+            return View(vModel);
+        }
+        [HttpPost]
+        public ActionResult JoinPosition(JoinPositionVModel vModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (HrmContext db = new HrmContext())
+                    {
+                        var entity = db.EmployeeEntities
+                            .Include("EmployeePositionEntities")
+                            .Single(o => o.EmployeeID == vModel.EmployeeID);
+                        entity.JoinPosition(vModel.StartDate, vModel.PositionID, vModel.WorkshopID);
+                        db.SaveChanges();
+                        Response.Write("OK");
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(vModel);
+        }
+        #endregion
+
+        #region 转岗
+        [HttpGet]
+        public ActionResult SwitchPosition(int id)
+        {
+            SwitchPositionVModel vModel = new SwitchPositionVModel();
+            vModel.EmployeeID = id;
+            vModel.StartDate = DateTime.Today;
+            return View(vModel);
+        }
+        [HttpPost]
+        public ActionResult SwitchPosition(SwitchPositionVModel vModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (HrmContext db = new HrmContext())
+                    {
+                        var entity = db.EmployeeEntities
+                            .Include("EmployeePositionEntities")
+                            .Single(o => o.EmployeeID == vModel.EmployeeID);
+                        entity.SwitchPosition(vModel.StartDate, vModel.PositionID, vModel.WorkshopID);
+                        db.SaveChanges();
+                        Response.Write("OK");
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(vModel);
+        }
+        #endregion
+
         #endregion
     }
 }
