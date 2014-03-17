@@ -144,7 +144,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Employee\AddWorkshopPositionVModel.cs" />
+    <Compile Include="Models\Employee\JoinPositionVModel.cs" />
+    <Compile Include="Models\Employee\LeavePositionVModel.cs" />
+    <Compile Include="Models\Employee\SwitchPositionVModel.cs" />
     <Compile Include="Models\Employee\CreateVModel.cs" />
     <Compile Include="Models\Employee\DetailsVModel.cs" />
     <Compile Include="Models\Employee\EditVModel.cs" />
@@ -269,7 +271,9 @@
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Details.cshtml" />
-    <Content Include="Views\Employee\AddWorkshopPosition.cshtml" />
+    <Content Include="Views\Employee\SwitchPosition.cshtml" />
+    <Content Include="Views\Employee\LeavePosition.cshtml" />
+    <Content Include="Views\Employee\JoinPosition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

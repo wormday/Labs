@@ -1,0 +1,16 @@
+﻿@using Hrm.WebApp.Common.HtmlHelper
+@model Hrm.WebApp.Models.Employee.LeavePositionVModel
+@{
+    Layout = null;
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(o => o.EmployeeID);
+    <div class="tr">
+        <label>离岗日期：</label>@Html.EditorFor(o => o.EndDate)
+    </div>
+    <div style="font-size:12px;">@Html.ValidationSummary(false)</div>
+}
+<script type="text/javascript">
+    $(".datepicker").datepicker({ "dateFormat": "yy-mm-dd" });
+</script>

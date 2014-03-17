@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System;
 
-namespace MDSys.WebApp.Common.HtmlHelper
+namespace Hrm.WebApp.Common.HtmlHelper
 {
     public static class HtmlBlock
     {
@@ -29,20 +29,22 @@ namespace MDSys.WebApp.Common.HtmlHelper
         //}
         //#endregion
 
-        //#region 日期
-        //public static MvcHtmlString DateTime(System.DateTime? time)
-        //{
-        //    MvcHtmlString rtnValue;
-        //    if (!time.HasValue)
-        //        rtnValue = new MvcHtmlString(null);
-        //    else
-        //    {
-        //        string strHtml = time.Value.ToString("yyyy-MM-dd");
-        //        rtnValue = new MvcHtmlString(strHtml);
-        //    }
-        //    return rtnValue;
-        //}
-        //#endregion
+        #region 日期
+        public static MvcHtmlString DateTime(System.DateTime? time,string format=null)
+        {
+            MvcHtmlString rtnValue;
+            if (!time.HasValue)
+                rtnValue = new MvcHtmlString(null);
+            else
+            {
+                if(string.IsNullOrWhiteSpace(format))
+                    format="yyyy-MM-dd";
+                string strHtml = time.Value.ToString(format);
+                rtnValue = new MvcHtmlString(strHtml);
+            }
+            return rtnValue;
+        }
+        #endregion
 
         //#region 分支机构
         //public static MvcHtmlString Branch(int? branchID)
