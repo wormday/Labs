@@ -3,6 +3,11 @@
 <head>
     <title>Tetris</title>
 </head>
+
+<body>
+<canvas id="myCanvas" width="200" height="400" style="border:1px solid #c3c3c3;">
+    Your browser does not support the canvas element.
+</canvas>
 <script>
     function star(){
         var OccuptedBlockStyle={isBlank:false};
@@ -14,8 +19,7 @@
         }
         for(var lineNumber=0;lineNumber<20;lineNumber++){
             sense[lineNumber]=new Array();
-            for(var colNumber=0;colNumber<10;colNumber++)
-            {
+            for(var colNumber=0;colNumber<10;colNumber++){
                 sense[lineNumber][colNumber]=new block();
                 if(lineNumber==colNumber)  {
                     sense[lineNumber][colNumber].style=   OccuptedBlockStyle;
@@ -39,11 +43,9 @@
 
 
         function draw(canvas,sense) {
-            for(var i=0;i<sense.length;i++)
-            {
+            for(var i=0;i<sense.length;i++){
                 for(var j=0;j<sense[i].length;j++){
-                    if(!sense[i][j].style.isBlank)
-                    {
+                    if(!sense[i][j].style.isBlank){
                         var cxt=canvas.getContext("2d");
                         cxt.fillStyle="#FF0000";
                         cxt.fillRect(i*blockWidth,j*blockHeight,blockWidth,blockHeight);
@@ -52,10 +54,7 @@
             }
         }
     }
+    star();
 </script>
-<body onload="star()">
-<canvas id="myCanvas" width="200" height="400" style="border:1px solid #c3c3c3;">
-    Your browser does not support the canvas element.
-</canvas>
 </body>
 </html>

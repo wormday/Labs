@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function Base1(){
+        this.Name="Base1";
+    }
+    function Base2(){
+        this.Name="Base2"
+    }
+    var base1Obj=new Base1();
+    var base2Obj=new Base2();
+    function Emp(){
+        this.TT="Emp";
+    }
+    Emp.prototype=base1Obj;
+    var empObj=new Emp();
+
+    document.writeln("empObj.constructor="+empObj.constructor+"<br />")
+    document.writeln("empObj.constructor.prototype="+empObj.constructor.prototype+"<br />");
+    document.writeln("empObj.Name="+empObj.Name+"<br />");
+    document.writeln("<br />");
+
+
+
+</script>
+</body>
+</html>

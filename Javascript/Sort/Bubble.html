@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function CreateRandomArray(length) {
+        var arrayList = [];
+        for (var i = 0; i < length; i++) {
+            arrayList[i] = Math.floor(Math.random() * 1000)
+        }
+        return arrayList;
+    }
+    function ShowArray(arrayList) {
+        for (var i = 0; i < arrayList.length; i++) {
+            document.write(arrayList[i] + ",");
+        }
+    }
+    function Swap(arrayList, a, b) {
+        if (arrayList[a] > arrayList[b]) {
+            var tmp = arrayList[a];
+            arrayList[a] = arrayList[b];
+            arrayList[b] = tmp;
+        }
+    }
+    function BubbleSort(arrayList) {
+        for (var i = 0; i < arrayList.length - 1; i++) {
+            for (var j = 0; j < arrayList.length - 1; j++) {
+                if (arrayList[j] > arrayList[j + 1]) {
+                    Swap(arrayList, j, j + 1);
+                }
+            }
+        }
+    }
+    function SwapSort(arrayList) {
+        for (var i = 0; i < arrayList.length - 1; i++) {
+            for (var j = i + 1; j < arrayList.length; j++) {
+                Swap(arrayList, i, j);
+            }
+        }
+    }
+    function InsertSort(arrayList) {
+        var tmpList = [];
+        for (var i = 0; i < arrayList.length; i++) {
+            for (var j = 0; j <= i;j++) {
+                if (i=j)
+                    tmpList[j] = arrayList[i];
+                else if (tmpList[j] > arrayList[i]) {
+                    for(var m=i;m>j;m--){
+                        Swap(tmpList,)
+                    }
+                }
+            }
+        }
+    }
+    var array = CreateRandomArray(100);
+    BubbleSort(array);
+    ShowArray(array);
+
+    document.writeln("<br />")
+
+    var array = CreateRandomArray(100);
+    SwapSort(array);
+    ShowArray(array);
+
+</script>
+</body>
+</html>
